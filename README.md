@@ -1,0 +1,1 @@
+firestore 関連の情報はfirestore.tsxをroot直下に配置してまとめる
