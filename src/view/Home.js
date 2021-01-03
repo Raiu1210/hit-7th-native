@@ -6,33 +6,35 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import db from '../../firestore'
 
 // import my components
-
+import QuizTitle from '../component/QuizTitle'
 
 export default function Home() {
   const [isReady, setIsReady] = useState(false);
-  const [quiz, setQuiz] = useState({});
+  const [quizList, setQuizList] = useState({});
 
   async function getFirestore() {
     const querySnapshot = await db
       .collection('ranking')
       .get();
       
-      var latestQuiz = {};
+      var quizData = [];
       querySnapshot.forEach(doc => {
-        latestQuiz[doc.id] = doc.data()
+        const tmp = doc.data()
+        tmp['id'] = doc.id
+        quizData.push(tmp)
       });
+      
+      console.log(quizData)
 
-      // console.log("In func")
-      // console.log(Object.keys(latestQuiz))
-      return latestQuiz
+      return quizData
   }
   
   // 起動時の実行処理
   useEffect(() => {
     const prepareQuiz = async () => {
-      const latestQuiz = await getFirestore()
+      const quizData = await getFirestore()
       
-      setQuiz(latestQuiz)
+      setQuizList(quizData)
       setIsReady(true);
     }
 
@@ -47,15 +49,35 @@ export default function Home() {
     )
   }
 
+
+  const renderQuizTitle = ({ item }) => (
+    <QuizTitle title={item.title} />
+  );
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {Object.keys(quiz).forEach(function(key) {
-        <Text>{key}</Text>
-      })}
-      {console.log(Object.keys(quiz))}
-      <Text>{quiz['0001']['title']}</Text>
-      
-      {/* <StatusBar style="auto" /> */}
+      <FlatList
+        data={quizList}
+        renderItem={renderQuizTitle}
+        keyExtractor={item => item.title}
+      />
     </View>
   );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
