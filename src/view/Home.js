@@ -8,6 +8,25 @@ import db from '../../firestore'
 // import my components
 import QuizTitle from '../component/QuizTitle'
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
+
 export default function Home() {
   const [isReady, setIsReady] = useState(false);
   const [quizList, setQuizList] = useState({});
@@ -50,11 +69,11 @@ export default function Home() {
 
 
   const renderQuizTitle = ({ item }) => (
-    <QuizTitle title={item.title} />
+    <QuizTitle data={item} />
   );
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.container}>
       <FlatList
         data={quizList}
         renderItem={renderQuizTitle}
@@ -63,20 +82,3 @@ export default function Home() {
     </View>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-});

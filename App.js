@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // import screens
 import Home from './src/view/Home'
+import Quiz from './src/view/Quiz'
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="7位当て" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{ title: '問題一覧' }}/>
+        <Stack.Screen name="Quiz" component={Quiz} />
       </Stack.Navigator>
     </NavigationContainer>
   );
