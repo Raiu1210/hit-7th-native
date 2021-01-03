@@ -19,7 +19,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{ title: '問題一覧' }}/>
-        <Stack.Screen name="Quiz" component={Quiz} />
+        <Stack.Screen name="Quiz" component={Quiz} options={{ title: '7位を当てろ' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
