@@ -12,6 +12,7 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false);
   const [quizList, setQuizList] = useState({});
 
+  // doc.idをidとして追加してquizList用のデータを作成する
   async function getFirestore() {
     const querySnapshot = await db
       .collection('ranking')
@@ -24,8 +25,6 @@ export default function Home() {
         quizData.push(tmp)
       });
       
-      console.log(quizData)
-
       return quizData
   }
   
